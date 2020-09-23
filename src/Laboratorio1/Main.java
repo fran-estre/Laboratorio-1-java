@@ -1,6 +1,6 @@
 package Laboratorio1;
 
-public class Program {
+public class Main {
 
 	public static void main(String[] args) {
 
@@ -22,8 +22,13 @@ public class Program {
 		print(d1);
 	}
 
-	private static void print(double[][] d1) {
-
+	private static void print(double[][] arrayToPrint) {
+		for (int i = 0; i < arrayToPrint.length; i++) {
+			for (int j = 0; j < arrayToPrint[i].length; j++) {
+				System.out.format("%.5f%n", arrayToPrint[i][j]);
+			}
+			System.out.println();
+		}
 	}
 
 	private static double[][] createDouble(long[] d, double[] x, int rows, int columns) {
@@ -38,14 +43,34 @@ public class Program {
 		for (int i = 0; i < d.length; i++) {
 			if (d[i] == 13) {
 				for (int j = 0; j < x.length; j++) {
-					arrayToFill[i][j]=Math.tan(Math.atan(1/Math.exp((double)x[j])));
-					//arrayToFill[i][j]=1/Math.exp((double)x[j]); // tan is the inverse function of atan
+					arrayToFill[i][j] = Math.tan(Math.atan(1 / Math.exp(Math.abs(x[j]))));
+					// arrayToFill[i][j] = 1 / Math.exp(Math.abs(x[j])); 
+					// tan is the inverse function of atan
+					if (Double.isNaN(arrayToFill[i][j])) {
+						System.out.println("Hola1 " + d[i] + " " + x[j]);
+					}
 				}
 			} else if (d[i] == 5 || d[i] == 10 || d[i] == 14 || d[i] == 15 || d[i] == 16 || d[i] == 17 || d[i] == 18
 					|| d[i] == 19 || d[i] == 20) {
-				
-			} else {
+				for (int j = 0; j < x.length; j++) {
+					//esta operación es problemática, no es estable numéricamente
+					double exponente = Math.pow(x[j], (4 * x[j]));
+					double innerExpression = ((Math.sin(x[j]) - 3) / 3) / 4;
+					arrayToFill[i][j] = Math.sin(Math.pow(innerExpression, exponente));
 
+					if (Double.isNaN(arrayToFill[i][j])) {
+						System.out.println("Hola2 " + i + " " + j + " " + d[i] + " " + x[j] + " " + innerExpression
+								+ " " + exponente);
+					}
+				}
+			} else {
+				for (int j = 0; j < x.length; j++) {
+					arrayToFill[i][j] = Math.tan(Math.pow(Math.PI * (2 - Math.asin(Math.sin(x[j]))), 3));
+					// arrayToFill[i][j] = Math.tan(Math.pow(Math.PI * (2 - x[j]), 3));
+					if (Double.isNaN(arrayToFill[i][j])) {
+						System.out.println("Hola3 " + d[i] + " " + x[j]);
+					}
+				}
 			}
 		}
 	}
@@ -96,7 +121,7 @@ public class Program {
 		double rango = (max - min);
 		for (int i = 0; i < arrayToFill.length; i++) {
 			double aleatorio = (double) (Math.random() * rango) + min;
-			arrayToFill[i] = aleatorio;
+			arrayToFill[i] = truncate(aleatorio, 5);
 		}
 		return arrayToFill;
 	}
@@ -104,5 +129,10 @@ public class Program {
 	private static void print(double[] arrayToPrint) {
 		for (int i = 0; i < arrayToPrint.length; i++)
 			System.out.println(String.valueOf(arrayToPrint[i]));
+	}
+
+	private static double truncate(double number, int decimalPlaces) {
+		double potencia = Math.pow(10, decimalPlaces);
+		return ((long) (number * potencia)) / potencia;
 	}
 }
