@@ -17,7 +17,7 @@ public class Program {
 		print(x);
 
 		System.out.println("\n3. Cree una matriz bidimensional d1 de 18*15."
-				+ " Calcula sus elementos usando las siguientes fórmulas.");
+				+ " Calcula sus elementos usando las siguientes fórmulas del deber");
 		double[][] d1 = createDouble(d, x, 18, 15);
 		print(d1);
 	}
@@ -35,7 +35,19 @@ public class Program {
 	}
 
 	private static void fill(double[][] arrayToFill, long[] d, double[] x) {
-		
+		for (int i = 0; i < d.length; i++) {
+			if (d[i] == 13) {
+				for (int j = 0; j < x.length; j++) {
+					arrayToFill[i][j]=Math.tan(Math.atan(1/Math.exp((double)x[j])));
+					//arrayToFill[i][j]=1/Math.exp((double)x[j]); // tan is the inverse function of atan
+				}
+			} else if (d[i] == 5 || d[i] == 10 || d[i] == 14 || d[i] == 15 || d[i] == 16 || d[i] == 17 || d[i] == 18
+					|| d[i] == 19 || d[i] == 20) {
+				
+			} else {
+
+			}
+		}
 	}
 
 	private static long[] createLong(int start, int end) {
