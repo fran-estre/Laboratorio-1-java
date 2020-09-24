@@ -1,2 +1,3 @@
 # java
-Primer laboratorio de programación en java
+First programming laboratory in java
+Author: Francisco Estrella
